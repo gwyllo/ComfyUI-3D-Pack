@@ -1,7 +1,3 @@
-RUN curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && \
-    dpkg -i cloudflared.deb && \
-    rm cloudflared.deb
-    
 ARG CUDA_VERSION=12.1.0-devel
 
 FROM --platform=amd64 docker.io/nvidia/cuda:${CUDA_VERSION}-ubuntu22.04
@@ -37,6 +33,10 @@ RUN apt-get update && \
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11 && \
     rm -rf /var/lib/apt/lists/*
 
+RUN curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && \
+    dpkg -i cloudflared.deb && \
+    rm cloudflared.deb
+    
 RUN ln -s /usr/bin/python3.11 /usr/bin/python & \
     ln -s /usr/bin/python3.11 /usr/bin/python3 & \
     ln -s /usr/bin/pip3.11 /usr/bin/pip
