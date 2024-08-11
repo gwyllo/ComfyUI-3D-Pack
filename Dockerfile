@@ -1,3 +1,7 @@
+RUN curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && \
+    dpkg -i cloudflared.deb && \
+    rm cloudflared.deb
+    
 ARG CUDA_VERSION=12.1.0-devel
 
 FROM --platform=amd64 docker.io/nvidia/cuda:${CUDA_VERSION}-ubuntu22.04
@@ -130,4 +134,11 @@ RUN git clone "https://github.com/ltdrdata/ComfyUI-Manager.git" && \
     git reset --hard 2b8e76197ae970dbd7854a09a5ef57731dc1c82f
 
 WORKDIR /app
-ENTRYPOINT [ "python", "main.py", "--listen", "0.0.0.0" ]
+
+WORKDIR /app
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+EXPOSE 8188
+ENTRYPOINT ["/app/start.sh"]
+#ENTRYPOINT [ "python", "main.py", "--listen", "0.0.0.0" ]
