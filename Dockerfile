@@ -133,11 +133,10 @@ RUN git clone "https://github.com/ltdrdata/ComfyUI-Manager.git" && \
     cd ComfyUI-Manager && \
     git reset --hard 2b8e76197ae970dbd7854a09a5ef57731dc1c82f
 
-WORKDIR /app
+COPY start.sh /app/start.sh
 
 WORKDIR /app
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
+RUN chown user:user start.sh && chmod +x start.sh
 
 EXPOSE 8188
 ENTRYPOINT ["/app/start.sh"]
