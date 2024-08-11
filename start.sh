@@ -13,7 +13,4 @@ echo "https://$TUNNEL_URL"
 echo "========================================"
 
 # Start ComfyUI with suppressed output
-python /app/main.py --listen 0.0.0.0 > /dev/null 2>&1 &
-
-# Keep the script running
-tail -f /dev/null
+python /app/main.py --listen 0.0.0.0 > /tmp/comfyui.log 2>&1 &
